@@ -31,7 +31,7 @@ Technology Stack
  - Real-Time Chat: API-based solution
 
 Getting Started
-Clone the repository: git clone https://github.com/yourusername/wellmed.git
+Clone the repository: git clone https://github.com/simaG19/WellMed-Pharmacy-E-Commerce-Platform.git
 Install dependencies: composer install
 Set up environment variables in .env file.
 Run migrations if needed: php artisan migrate
