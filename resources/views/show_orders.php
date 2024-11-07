@@ -41,9 +41,9 @@
 
 <h2>Orders</h2>
 
-<a href="index.php" class="btn">Logout</a>
-<a href="admin_area.php" class="btn">Client Information</a>
-<a href="manage_products.php" class="btn">Manage Products</a>
+<a href="/" class="btn">Logout</a>
+<a href="/admin_area" class="btn">Client Information</a>
+<a href="/manage_products" class="btn">Manage Products</a>
 <br><br>
 
 <table>

@@ -20,10 +20,10 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Admin Area - Product List</h1>
         <div class="mb-3 text-right">
-            <a href="index.php" class="btn btn-secondary">Logout</a>
-            <a href="admin_area.php" class="btn btn-secondary">Client Information</a>
-            <a href="show_orders.php" class="btn btn-secondary">Manage Orders</a>
-            <a href="add_product.php" class="btn btn-primary">New Product</a>
+            <a href="/" class="btn btn-secondary">Logout</a>
+            <a href="/admin_area" class="btn btn-secondary">Client Information</a>
+            <a href="/show_orders" class="btn btn-secondary">Manage Orders</a>
+            <a href="/add_product" class="btn btn-primary">New Product</a>
         </div>
 
         <div class="row">
