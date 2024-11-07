@@ -59,9 +59,9 @@ $result = $conn->query($sql);
         <?php endif; ?>
 
         <div class="mb-3">
-            <a href="index.php" class="btn btn-secondary">Logout</a>
-            <a href="manage_products.php" class="btn btn-secondary">Manage Products</a>
-            <a href="show_orders.php" class="btn btn-secondary">Manage Orders</a>
+            <a href="/" class="btn btn-secondary">Logout</a>
+            <a href="/manage_products" class="btn btn-secondary">Manage Products</a>
+            <a href="/show_orders" class="btn btn-secondary">Manage Orders</a>
         </div>
 
         <?php if ($result->num_rows > 0): ?>
