@@ -227,7 +227,7 @@ if ($result->num_rows > 0) {
       echo '      <p class="card-text"><strong>Price:</strong> ' . $row['price'] . ' Birr</p>';
       
       // Start form for adding to cart
-      echo '      <form action="add_to_cart.php" method="POST">';
+      echo '      <form action="/add_to_cart" method="POST">';
       echo '          <input type="hidden" name="product_id" value="' . $row['id'] . '">';
       echo '          <input type="hidden" name="product_name" value="' . urlencode($row['name']) . '">';
       echo '          <input type="hidden" name="product_price" value="' . $row['price'] . '">';
@@ -240,7 +240,7 @@ if ($result->num_rows > 0) {
       echo '              <button type="button" class="btn btn-outline-secondary" id="increase-quantity">+</button>';
       echo '          </div>';
      
-      echo '     <a href="product_details.php?id=' . $row['id'] . '"> <p>view more</p></a>';
+      echo '     <a href="/product_details?id=' . $row['id'] . '"> <p>view more</p></a>';
       echo '          <button type="submit" class="btn btn-primary w-100">Add to cart</button>';
       echo '      </form>'; // End of form
   
