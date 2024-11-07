@@ -1,4 +1,4 @@
-<p?php
+<?php
 ?>
 
 
@@ -65,7 +65,7 @@
             <!-- Cart Icon with Badge -->
 <!-- Cart Icon with Badge -->
 <div class="cart-icon position-relative ms-3">
-    <a href="cart.php" class="d-flex align-items-center">
+    <a href="/cart" class="d-flex align-items-center">
         <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
         <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             <span id="cart-count">
@@ -180,96 +180,92 @@
   <div class="row">
       
     <?php
-      // Database connection parameters
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $dbname = "farmaci_db";
-      // Create connection
-      $conn = new mysqli($servername, $username, $password, $dbname);
-
-      // Check connection
-      if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
-      }
-
-      // Handle search query and filter type
-      $searchQuery = "";
-      if (isset($_GET['search']) && !empty($_GET['search'])) {
-          $searchTerm = $conn->real_escape_string($_GET['search']);
-          $searchQuery .= "WHERE name LIKE '%$searchTerm%'";
-      }
-
-      // Handle product type filter
-      $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
-      if ($filter != 'all') {
-          $productType = $conn->real_escape_string($filter);
-          $searchQuery .= ($searchQuery ? " AND" : " WHERE") . " type = '$productType'";
-      }
-
-      // Fetch products from the database with search filter
-      $sql = "SELECT * FROM products $searchQuery";
-      $result = $conn->query($sql);
-
-      // Display products
-     // Display products
-if ($result->num_rows > 0) {
-  while ($row = $result->fetch_assoc()) {
-      echo '<div class="col-md-4 mb-4 d-flex align-items-stretch">';
-      echo '  <div class="card shadow-sm">';
-      // Wrap the image in a link
-      echo '    <a href="product_details.php?id=' . $row['id'] . '">';
-      echo '      <img src="' . $row['image'] . '" alt="' . $row['name'] . '" class="card-img-top img-fluid" style="width: 400px; height: 300px; object-fit: cover;">';
-      echo '    </a>';
-      echo '    <div class="card-body">';
-      // Wrap the title in a link
-      echo '      <h5 class="card-title"><a href="product_details.php?id=' . $row['id'] . '">' . $row['name'] . '</a></h5>';
-      echo '      <p class="card-text"><strong>Price:</strong> ' . $row['price'] . ' Birr</p>';
-      
-      // Start form for adding to cart
-      echo '      <form action="/add_to_cart" method="POST">';
-      echo '          <input type="hidden" name="product_id" value="' . $row['id'] . '">';
-      echo '          <input type="hidden" name="product_name" value="' . urlencode($row['name']) . '">';
-      echo '          <input type="hidden" name="product_price" value="' . $row['price'] . '">';
-      
-      // Add a quantity input field
-      echo '          <div class="mb-3 d-flex align-items-center">';
-      echo '              <label for="quantity" class="form-label me-2">Quantity:</label>';
-      echo '              <button type="button" class="btn btn-outline-secondary me-1" id="decrease-quantity">-</button>';
-      echo '              <input type="number" name="quantity" value="1" min="1" class="form-control me-1" id="quantity" style="width: 60px;">';
-      echo '              <button type="button" class="btn btn-outline-secondary" id="increase-quantity">+</button>';
-      echo '          </div>';
-     
-      echo '     <a href="/product_details?id=' . $row['id'] . '"> <p>view more</p></a>';
-      echo '          <button type="submit" class="btn btn-primary w-100">Add to cart</button>';
-      echo '      </form>'; // End of form
+    // Database connection parameters
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "farmaci_db";
   
-      echo '    </div>';
-      echo '  </div>';
-      echo '</div>';
-  }
-} else {
-  echo "<p class='text-center'>No products found.</p>";
-}
-
-    
-    // Close connection
-    $conn->close();
-?>      
-<script>
-document.getElementById('increase-quantity').addEventListener('click', function() {
-    var quantityInput = document.getElementById('quantity');
-    var currentValue = parseInt(quantityInput.value);
-    quantityInput.value = currentValue + 1; // Increase the quantity by 1
-});
-
-document.getElementById('decrease-quantity').addEventListener('click', function() {
-    var quantityInput = document.getElementById('quantity');
-    var currentValue = parseInt(quantityInput.value);
-    if (currentValue > 1) {
-        quantityInput.value = currentValue - 1; // Decrease the quantity by 1, but not below 1
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+  
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-});
+  
+    // Handle search query and filter type
+    $searchQuery = "";
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $searchTerm = $conn->real_escape_string($_GET['search']);
+        $searchQuery .= "WHERE name LIKE '%$searchTerm%'";
+    }
+  
+    // Handle product type filter
+    $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
+    if ($filter != 'all') {
+        $productType = $conn->real_escape_string($filter);
+        $searchQuery .= ($searchQuery ? " AND" : " WHERE") . " type = '$productType'";
+    }
+  
+    // Fetch products from the database with search filter
+    $sql = "SELECT * FROM products $searchQuery";
+    $result = $conn->query($sql);
+  ?>
+  
+  <!-- Blade Template Syntax Below -->
+  @if ($result->num_rows > 0)
+      @foreach ($result as $row)
+          <div class="col-md-4 mb-4 d-flex align-items-stretch">
+              <div class="card shadow-sm">
+                  <a href="{{ url('/product_details?id=' . $row['id']) }}">
+                      <img src="{{ $row['image'] }}" alt="{{ $row['name'] }}" class="card-img-top img-fluid" style="width: 400px; height: 300px; object-fit: cover;">
+                  </a>
+                  <div class="card-body">
+                      <h5 class="card-title"><a href="{{ url('/product_details?id=' . $row['id']) }}">{{ $row['name'] }}</a></h5>
+                      <p class="card-text"><strong>Price:</strong> {{ $row['price'] }} Birr</p>
+  
+                      <form action="{{ url('/add_to_cart') }}" method="POST">
+                          @csrf
+                          <input type="hidden" name="product_id" value="{{ $row['id'] }}">
+                          <input type="hidden" name="product_name" value="{{ urlencode($row['name']) }}">
+                          <input type="hidden" name="product_price" value="{{ $row['price'] }}">
+  
+                          <div class="mb-3 d-flex align-items-center">
+                              <label for="quantity_{{ $row['id'] }}" class="form-label me-2">Quantity:</label>
+                              <button type="button" class="btn btn-outline-secondary me-1" id="decrease-quantity_{{ $row['id'] }}">-</button>
+                              <input type="number" name="quantity" value="1" min="1" class="form-control me-1" id="quantity_{{ $row['id'] }}" style="width: 60px;">
+                              <button type="button" class="btn btn-outline-secondary" id="increase-quantity_{{ $row['id'] }}">+</button>
+                          </div>
+  
+                          <a href="{{ url('/product_details?id=' . $row['id']) }}"><p>View more</p></a>
+  
+                          <button type="submit" class="btn btn-primary w-100">Add to cart</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      @endforeach
+  @else
+      <p class="text-center">No products found.</p>
+  @endif
+  
+<script>
+    @foreach ($result as $row)
+        document.getElementById('increase-quantity_{{ $row['id'] }}').addEventListener('click', function() {
+            var quantityInput = document.getElementById('quantity_{{ $row['id'] }}');
+            var currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1; // Increase the quantity by 1
+        });
+
+        document.getElementById('decrease-quantity_{{ $row['id'] }}').addEventListener('click', function() {
+            var quantityInput = document.getElementById('quantity_{{ $row['id'] }}');
+            var currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1; // Decrease the quantity by 1, but not below 1
+            }
+        });
+    @endforeach
 </script>
 
   </div>

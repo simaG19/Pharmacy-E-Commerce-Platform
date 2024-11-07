@@ -211,7 +211,7 @@ session_start(); // Start the session
 
                 // Display the total amount for the cart
                 echo '<h3 class="total-amount">Total Amount: ' . htmlspecialchars(number_format($totalAmount, 2)) . ' Birr</h3>'; // Format total amount
-                echo '<a href="checkout.php" class="btn btn-success">Proceed to Checkout</a>';
+                echo '<a href="/checkout" class="btn btn-success">Proceed to Checkout</a>';
             }
             ?>
             </tbody>
