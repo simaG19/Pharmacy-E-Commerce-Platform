@@ -134,15 +134,15 @@ session_start(); // Start the session
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="index.php">Home<br></a></li>
-                    <li><a href="shop.php">Shop <span class="sr-only">(current)</span></a></li>
-                    <li><a href="concelt.php">Consultation</a></li>
-                    <li><a href="about.php">About</a></li>
+                    <li><a href="/">Home<br></a></li>
+                    <li><a href="/shop">Shop <span class="sr-only">(current)</span></a></li>
+                    <li><a href="/concelt">Consultation</a></li>
+                    <li><a href="/about">About</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="cta-btn d-none d-sm-block" href="#appointment">Upload Prescription</a>
+            <a class="cta-btn d-none d-sm-block" href="/upload">Upload Prescription</a>
 
             <!-- Cart Icon with Badge -->
             <div class="cart-icon position-relative ms-3">

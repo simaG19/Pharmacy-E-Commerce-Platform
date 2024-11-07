@@ -133,7 +133,7 @@
                 }
             </style>
 
-            <a class="cta-btn d-none d-sm-block" href="upload.php">Upload Prescription</a>
+            <a class="cta-btn d-none d-sm-block" href="/upload">Upload Prescription</a>
 
         </div>
     </div>

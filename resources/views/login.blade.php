@@ -72,42 +72,21 @@
 <body>
     <div class="container">
         <h2><i class="fas fa-user-lock"></i> Login</h2>
-        <?php
-        session_start(); // Start the session for security
-        
-        // Check if form is submitted
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Hardcoded username and password (for demonstration purposes)
-            $username = "admin";
-            $password = "password";
 
-            // Get username and password from the form
-            $input_username = htmlspecialchars(trim($_POST['username']));
-            $input_password = htmlspecialchars(trim($_POST['password']));
-
-            // Hash the password for security (consider using password_hash in a real scenario)
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Check if username and password match
-            if ($input_username === $username && password_verify($input_password, $hashed_password)) {
-                // Successful login, store user info in session
-                $_SESSION['username'] = $username;
-                // Redirect to dashboard or desired page
-                header("Location: admin_area.php");
-                exit();
-            } else {
-                // Invalid credentials, display error message
-                echo '<p class="error">Invalid username or password</p>';
-            }
-        }
-        ?>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+        <!-- Login Form -->
+        <form action="{{ url('/login') }}" method="POST">
+            @csrf <!-- CSRF token for security -->
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <input type="submit" value="Login">
         </form>
+
+        <!-- Error message -->
+        @if(session('error'))
+            <p class="error">{{ session('error') }}</p>
+        @endif
     </div>
 </body>
 </html>
