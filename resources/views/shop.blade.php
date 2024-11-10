@@ -1,4 +1,4 @@
-<?php
+<p?php
 ?>
 
 
@@ -52,15 +52,15 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="index.php">Home<br></a></li>
-                    <li><a href="shop.php"class="active">Shop <span class="sr-only">(current)</span></a></li>
-                    <li><a href="concelt.php">Consultation</a></li>
-                    <li><a href="about.php">About</a></li>
+                    <li><a href="/">Home<br></a></li>
+                  <!-- <li><a href="shop.php"class="active">Shop <span class="sr-only">(current)</span></a></li> -->
+                    <li><a href="/concelt">Consultation</a></li>
+                    <li><a href="/about">About</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="cta-btn d-none d-sm-block" href="upload.php">Upload Prescription</a>
+            <a class="cta-btn d-none d-sm-block" href="shop.php">Shop</a>
 
             <!-- Cart Icon with Badge -->
 <!-- Cart Icon with Badge -->
@@ -172,6 +172,10 @@
       <li class="list-inline-item">
         <a href="?filter=suppliment" class="btn btn-outline-primary <?php echo (isset($_GET['filter']) && $_GET['filter'] == 'suppliment') ? 'active' : ''; ?>">Suppliment</a>
       </li>
+      <li class="list-inline-item">
+        <a href="?filter=With Prescription" class="btn btn-outline-primary <?php echo (isset($_GET['filter']) && $_GET['filter'] == 'With Prescription') ? 'active' : ''; ?>">With Prescription</a>
+      </li>
+      
     </ul>
   </div>
 </div>
@@ -179,94 +183,126 @@
 <div class="container">
   <div class="row">
       
-    <?php
-    // Database connection parameters
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "farmaci_db";
-  
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-  
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-  
-    // Handle search query and filter type
-    $searchQuery = "";
-    if (isset($_GET['search']) && !empty($_GET['search'])) {
-        $searchTerm = $conn->real_escape_string($_GET['search']);
-        $searchQuery .= "WHERE name LIKE '%$searchTerm%'";
-    }
-  
-    // Handle product type filter
-    $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
-    if ($filter != 'all') {
-        $productType = $conn->real_escape_string($filter);
-        $searchQuery .= ($searchQuery ? " AND" : " WHERE") . " type = '$productType'";
-    }
-  
-    // Fetch products from the database with search filter
-    $sql = "SELECT * FROM products $searchQuery";
-    $result = $conn->query($sql);
-  ?>
-  
-  <!-- Blade Template Syntax Below -->
-  @if ($result->num_rows > 0)
-      @foreach ($result as $row)
-          <div class="col-md-4 mb-4 d-flex align-items-stretch">
-              <div class="card shadow-sm">
-                  <a href="{{ url('/product_details?id=' . $row['id']) }}">
-                      <img src="{{ $row['image'] }}" alt="{{ $row['name'] }}" class="card-img-top img-fluid" style="width: 400px; height: 300px; object-fit: cover;">
-                  </a>
-                  <div class="card-body">
-                      <h5 class="card-title"><a href="{{ url('/product_details?id=' . $row['id']) }}">{{ $row['name'] }}</a></h5>
-                      <p class="card-text"><strong>Price:</strong> {{ $row['price'] }} Birr</p>
-  
-                      <form action="{{ url('/add_to_cart') }}" method="POST">
-                          @csrf
-                          <input type="hidden" name="product_id" value="{{ $row['id'] }}">
-                          <input type="hidden" name="product_name" value="{{ urlencode($row['name']) }}">
-                          <input type="hidden" name="product_price" value="{{ $row['price'] }}">
-  
-                          <div class="mb-3 d-flex align-items-center">
-                              <label for="quantity_{{ $row['id'] }}" class="form-label me-2">Quantity:</label>
-                              <button type="button" class="btn btn-outline-secondary me-1" id="decrease-quantity_{{ $row['id'] }}">-</button>
-                              <input type="number" name="quantity" value="1" min="1" class="form-control me-1" id="quantity_{{ $row['id'] }}" style="width: 60px;">
-                              <button type="button" class="btn btn-outline-secondary" id="increase-quantity_{{ $row['id'] }}">+</button>
-                          </div>
-  
-                          <a href="{{ url('/product_details?id=' . $row['id']) }}"><p>View more</p></a>
-  
-                          <button type="submit" class="btn btn-primary w-100">Add to cart</button>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      @endforeach
-  @else
-      <p class="text-center">No products found.</p>
-  @endif
-  
-<script>
-    @foreach ($result as $row)
-        document.getElementById('increase-quantity_{{ $row['id'] }}').addEventListener('click', function() {
-            var quantityInput = document.getElementById('quantity_{{ $row['id'] }}');
-            var currentValue = parseInt(quantityInput.value);
-            quantityInput.value = currentValue + 1; // Increase the quantity by 1
-        });
+  <?php
+// Database connection parameters
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "farmaci_db";
 
-        document.getElementById('decrease-quantity_{{ $row['id'] }}').addEventListener('click', function() {
-            var quantityInput = document.getElementById('quantity_{{ $row['id'] }}');
-            var currentValue = parseInt(quantityInput.value);
-            if (currentValue > 1) {
-                quantityInput.value = currentValue - 1; // Decrease the quantity by 1, but not below 1
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Handle search query and filter type
+$searchQuery = "";
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+    $searchTerm = $conn->real_escape_string($_GET['search']);
+    $searchQuery .= "WHERE name LIKE '%$searchTerm%'";
+}
+
+// Handle product type filter
+$filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
+if ($filter != 'all') {
+    $productType = $conn->real_escape_string($filter);
+    $searchQuery .= ($searchQuery ? " AND" : " WHERE") . " type = '$productType'";
+}
+
+// Fetch products from the database with search filter and order by availability
+$sql = "SELECT * FROM products $searchQuery ORDER BY avl asc";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        echo '<div class="col-md-4 mb-4 d-flex align-items-stretch">';
+        echo '  <div class="card shadow-sm">';
+
+        // Image container with relative positioning
+        echo '    <div class="position-relative">';
+        // Wrap the image in a link
+        echo '    <a href="' . route("product.details", ['id' => $row['id']]) . '">';
+        echo '        <img src="' . $row['image'] . '" alt="' . $row['name'] . '" class="card-img-top img-fluid" style="width: 400px; height: 300px; object-fit: cover;">';
+        echo '    </a>';
+
+
+        // Position availability text at the top right of the image with color coding
+        $avlColor = $row['avl'] === 'Available' ? 'green' : 'red';
+        echo '      <button class="position-absolute" style="top: 5px; right: 5px; background-color:' . $avlColor . '; color: white; font-size: 12px; border: none; padding: 2px 8px; border-radius: 3px;">' . htmlspecialchars($row['avl']) . '</button>';
+         echo '    </div>';
+
+        // Card body content
+        echo '    <div class="card-body">';
+        // Wrap the title in a link
+        echo '      <h5 class="card-title"><a href="product_details.php?id=' . $row['id'] . '">' . $row['name'] . '</a></h5>';
+        echo '      <p class="card-text"><strong>Price:</strong> ' . $row['price'] . ' Birr</p>';
+
+        // Check availability and product type
+        if ($row['avl'] === 'Available') {
+            if ($row['type'] === 'With Prescription') {
+                // Display "Buy via Prescription" button if the product type requires a prescription
+                echo '      <p>Available exclusively for patients with a valid prescription.</p>'; 
+                echo '      <form action="upload.php" method="POST">';
+                echo '          <input type="hidden" name="product_id" value="' . $row['id'] . '">';
+                echo '          <button type="submit" class="btn btn-warning w-100">Buy via Prescription</button>';
+                echo '      </form>';
+
+            } else {
+                // Display "Add to Cart" and view more options if the product does not require a prescription
+                echo '      <form action="add_to_cart.php" method="POST">';
+                echo '          <input type="hidden" name="product_id" value="' . $row['id'] . '">';
+                echo '          <input type="hidden" name="product_name" value="' . urlencode($row['name']) . '">';
+                echo '          <input type="hidden" name="product_price" value="' . $row['price'] . '">';
+
+                // Quantity input field
+                echo '          <div class="mb-3 d-flex align-items-center">';
+                echo '              <label for="quantity" class="form-label me-2">Quantity:</label>';
+                echo '              <button type="button" class="btn btn-outline-secondary me-1" id="decrease-quantity">-</button>';
+                echo '              <input type="number" name="quantity" value="1" min="1" class="form-control me-1" id="quantity" style="width: 60px;">';
+                echo '              <button type="button" class="btn btn-outline-secondary" id="increase-quantity">+</button>';
+                echo '          </div>';
+                
+                echo '          <a href="product_details.php?id=' . $row['id'] . '"> <p>View More</p></a>';
+                echo '          <button type="submit" class="btn btn-primary w-100">Add to Cart</button>';
+                echo '      </form>';
             }
-        });
-    @endforeach
+        } else {
+            // Display out of stock message if unavailable
+            echo '      <p class="text-danger"><strong>Out of Stock</strong></p>';
+        }
+
+        echo '    </div>';
+        echo '  </div>';
+        echo '</div>';
+    }
+} else {
+    echo "<p class='text-center'>No products found.</p>";
+}
+
+// Close connection
+$conn->close();
+?>
+
+<script>
+// JavaScript for quantity adjustment
+document.getElementById('increase-quantity').addEventListener('click', function() {
+    var quantityInput = document.getElementById('quantity');
+    var currentValue = parseInt(quantityInput.value);
+    quantityInput.value = currentValue + 1; // Increase the quantity by 1
+});
+
+document.getElementById('decrease-quantity').addEventListener('click', function() {
+    var quantityInput = document.getElementById('quantity');
+    var currentValue = parseInt(quantityInput.value);
+    if (currentValue > 1) {
+        quantityInput.value = currentValue - 1; // Decrease the quantity by 1, but not below 1
+    }
+});
 </script>
+
 
   </div>
 </div>
