@@ -45,8 +45,34 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <a class="navbar-brand" href="#">Admin Area</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link" href=".php"  style="color:black;">Client Prescription</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/manage_products"  style="color:black;">Manage Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="show_orders.php"  style="color:black;">Manage Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php" style="color:black;">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container">
-        <h1 class="mt-5">Admin Area - Client Prescribtion</h1>
+        <h1 class="mt-5">Client Prescribtion</h1>
 
         <?php if (isset($successMessage)): ?>
             <div class="alert alert-success">
@@ -58,11 +84,11 @@ $result = $conn->query($sql);
             </div>
         <?php endif; ?>
 
-        <div class="mb-3">
-            <a href="/" class="btn btn-secondary">Logout</a>
-            <a href="/manage_products" class="btn btn-secondary">Manage Products</a>
-            <a href="/show_orders" class="btn btn-secondary">Manage Orders</a>
-        </div>
+        <div class="container">
+
+    <!-- End of Navbar -->
+</div>
+
 
         <?php if ($result->num_rows > 0): ?>
             <table class="table table-bordered">
