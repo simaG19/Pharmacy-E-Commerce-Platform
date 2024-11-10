@@ -118,27 +118,29 @@ session_start();
         const stripe = Stripe("pk_test_51QI9OoLz7iWgQZmPRaYmdXRPXIhay4bMI24UxYtldbRro8EIgwNslgcNrq7p0UU0Y5gRRS2bHieglIKxdLGbQLoM00uJxgJEea"); // Replace with your publishable key
 
         document.getElementById("checkout-button").addEventListener("click", () => {
-            fetch("create_checkout_session.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    totalAmount: <?php echo $totalAmount; ?>, // Pass total amount
-                    description: "<?php echo htmlspecialchars($description); ?>" // Order description
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                return stripe.redirectToCheckout({ sessionId: data.sessionId });
-            })
-            .then(result => {
-                if (result.error) {
-                    alert(result.error.message);
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        });
+    fetch("{{ url('/create-checkout-session') }}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+        },
+        body: JSON.stringify({
+            totalAmount: {{ $totalAmount }}, // Pass total amount
+            description: "{{ htmlspecialchars($description) }}" // Order description
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        return stripe.redirectToCheckout({ sessionId: data.sessionId });
+    })
+    .then(result => {
+        if (result.error) {
+            alert(result.error.message);
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
+
     </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
