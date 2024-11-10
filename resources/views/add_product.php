@@ -33,42 +33,45 @@
 <body>
     <div class="form-container">
         <h1>Add Product</h1>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="image">Image:</label>
-                <input type="file" id="image" name="image" accept="image/*" required class="form-control">
-            </div>
+        <form action="<?php echo url('/add_product'); ?>" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required class="form-control">
-            </div>
+    <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" required class="form-control">
+    </div>
 
-            <div class="form-group">
-                <label for="price">Price:</label>
-                <input type="number" id="price" name="price" step="0.01" required class="form-control">
-            </div>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required class="form-control">
+    </div>
 
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" required class="form-control"></textarea>
-            </div>
+    <div class="form-group">
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" required class="form-control">
+    </div>
 
-            <div class="form-group">
-                <label for="type">Product Type:</label>
-                <select id="type" name="type" required class="form-control">
-                    <option value="" disabled selected>Select product type</option>
-                    <option value="baby_products">Baby Products</option>
-                    <option value="hair_products">Hair Products</option>
-                    <option value="skin_care">Skin Care</option>
-                    <option value="suppliment">Health Supplements</option>
-                    <option value="First Aid">First Aid</option>
-                </select>
-            </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required class="form-control"></textarea>
+    </div>
 
-            <input type="submit" value="Add Product" class="btn btn-custom btn-block">
-            <a href="manage_products.php" class="btn btn-secondary btn-block">Manage Products</a>
-        </form>
+    <div class="form-group">
+        <label for="type">Product Type:</label>
+        <select id="type" name="type" required class="form-control">
+            <option value="" disabled selected>Select product type</option>
+            <option value="baby_products">Baby Products</option>
+            <option value="hair_products">Hair Products</option>
+            <option value="skin_care">Skin Care</option>
+            <option value="supplement">Health Supplements</option>
+            <option value="First Aid">First Aid</option>
+        </select>
+    </div>
+
+    <input type="submit" value="Add Product" class="btn btn-custom btn-block">
+    <a href="<?php echo url('/manage_products'); ?>" class="btn btn-secondary btn-block">Manage Products</a>
+</form>
+
 
         <?php
         // Database connection parameters
