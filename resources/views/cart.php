@@ -135,18 +135,18 @@ session_start(); // Start the session
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="/">Home<br></a></li>
-                    <li><a href="/shop">Shop <span class="sr-only">(current)</span></a></li>
+                    <!-- <li><a href="shop.php">Shop <span class="sr-only">(current)</span></a></li> -->
                     <li><a href="/concelt">Consultation</a></li>
                     <li><a href="/about">About</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
 
-            <a class="cta-btn d-none d-sm-block" href="/upload">Upload Prescription</a>
+            <a class="cta-btn d-none d-sm-block" href="/shop">Shop</a>
 
             <!-- Cart Icon with Badge -->
             <div class="cart-icon position-relative ms-3">
-                <a href="cart.php" class="d-flex align-items-center">
+                <a href="/cart" class="d-flex align-items-center">
                     <i class="bi bi-cart" style="font-size: 1.5rem;"></i>
                     <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         <span id="cart-count">
@@ -165,57 +165,66 @@ session_start(); // Start the session
 <div class="container mt-4">
     <h2 class="mb-4">Your Shopping Cart</h2>
     <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
-            <thead class="table-light">
-                <tr>
-                    <th>Product Name</th>
-                    <th>Price (Birr)</th>
-                    <th>Quantity</th>
-                    <th>Total (Birr)</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
+    <table class="table table-striped table-bordered table-hover">
+    <thead class="table-light">
+        <tr>
+            <th>Product Name</th>
+            <th>Price (Birr)</th>
+            <th>Quantity</th>
+            <th>VAT (15%)</th>
+            <th>Total (Birr)</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
 
-            <?php
-            // Check if the cart exists
-            if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-                echo "<tr><td colspan='5' class='text-center'>Your cart is empty.</td></tr>";
+    <?php
+    // Check if the cart exists
+    if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
+        echo "<tr><td colspan='6' class='text-center'>Your cart is empty.</td></tr>";
+    } else {
+        $totalAmount = 0; // Initialize total amount
+        $totalVat = 0; // Initialize total VAT
+
+        // Ensure cart items are in the expected array format
+        foreach ($_SESSION['cart'] as $item) {
+            // Make sure $item is an array and has the necessary keys
+            if (is_array($item) && isset($item['id'], $item['name'], $item['price'], $item['quantity'])) {
+                // Decode the product name
+                $productName = urldecode($item['name']);
+                
+                $subtotal = $item['price'] * $item['quantity']; // Calculate subtotal for each item
+                $vat = $subtotal * 0.15; // Calculate VAT for each item
+                $total = $subtotal + $vat; // Calculate total for each item including VAT
+
+                $totalAmount += $total; // Add to total amount
+                $totalVat += $vat; // Add VAT to total VAT
+
+                echo '<tr>';
+                echo '<td>' . htmlspecialchars($productName) . '</td>'; // Use the decoded name here
+                echo '<td>' . htmlspecialchars(number_format($item['price'], 2)) . ' Birr</td>'; // Format price to 2 decimal places
+                echo '<td>' . htmlspecialchars($item['quantity']) . '</td>';
+                echo '<td>' . htmlspecialchars(number_format($vat, 2)) . ' Birr</td>'; // Show VAT for each item
+                echo '<td>' . htmlspecialchars(number_format($total, 2)) . ' Birr</td>'; // Show total with VAT
+                echo '<td><a href="remove_from_cart.php?id=' . htmlspecialchars($item['id']) . '" class="btn btn-danger btn-sm">Remove</a></td>'; // Link to remove item
+                echo '</tr>';
             } else {
-                $totalAmount = 0; // Initialize total amount
-
-                // Ensure cart items are in the expected array format
-                foreach ($_SESSION['cart'] as $item) {
-                    // Make sure $item is an array and has the necessary keys
-                    if (is_array($item) && isset($item['id'], $item['name'], $item['price'], $item['quantity'])) {
-                        // Decode the product name
-                        $productName = urldecode($item['name']);
-                        
-                        $total = $item['price'] * $item['quantity']; // Calculate total for each item
-                        $totalAmount += $total; // Add to total amount
-
-                        echo '<tr>';
-                        echo '<td>' . htmlspecialchars($productName) . '</td>'; // Use the decoded name here
-                        echo '<td>' . htmlspecialchars(number_format($item['price'], 2)) . ' Birr</td>'; // Format price to 2 decimal places
-                        echo '<td>' . htmlspecialchars($item['quantity']) . '</td>';
-                        echo '<td>' . htmlspecialchars(number_format($total, 2)) . ' Birr</td>'; // Format total to 2 decimal places
-                        echo '<td><a href="remove_from_cart.php?id=' . htmlspecialchars($item['id']) . '" class="btn btn-danger btn-sm">Remove</a></td>'; // Link to remove item
-                        echo '</tr>';
-                    } else {
-                        echo '<tr><td colspan="5" class="text-center">Invalid cart item.</td></tr>';
-                    }
-                }
-
-                echo '</tbody>';
-                echo '</table>';
-
-                // Display the total amount for the cart
-                echo '<h3 class="total-amount">Total Amount: ' . htmlspecialchars(number_format($totalAmount, 2)) . ' Birr</h3>'; // Format total amount
-                echo '<a href="/checkout" class="btn btn-success">Proceed to Checkout</a>';
+                echo '<tr><td colspan="6" class="text-center">Invalid cart item.</td></tr>';
             }
-            ?>
-            </tbody>
-        </table>
+        }
+
+        echo '</tbody>';
+        echo '</table>';
+
+        // Display the total VAT and total amount for the cart
+        echo '<h4 class="total-vat">Total VAT (15%): ' . htmlspecialchars(number_format($totalVat, 2)) . ' Birr</h4>'; // Show total VAT
+        echo '<h3 class="total-amount">Total Amount (Including VAT): ' . htmlspecialchars(number_format($totalAmount, 2)) . ' Birr</h3>'; // Format total amount with VAT
+        echo '<a href="checkout.php" class="btn btn-success">Proceed to Checkout</a>';
+    }
+    ?>
+    </tbody>
+</table>
+
     </div>
 </div>
 </body>
