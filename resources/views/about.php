@@ -71,7 +71,7 @@
     <nav id="navmenu" class="navmenu">
       <ul>
         <li><a href="/" >Home<br></a></li>
-        <li><a href="/shop">Shop</a></li>
+        <!-- <li><a href="shop.php">Shop</a></li> -->
         <li><a href="/concelt">Consultation</a></li>
         <li><a href="/about" class="active">About</a></li>
       </ul>
@@ -113,7 +113,7 @@ top: 20px;   /* Adjust vertical positioning */
 }
 </style>
 
-    <a class="cta-btn d-none d-sm-block" href="upload.php">Upload Prescription</a>
+    <a class="cta-btn d-none d-sm-block" href="/shop">Shop</a>
 
   </div>
 
