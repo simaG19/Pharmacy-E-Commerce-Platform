@@ -1,11 +1,12 @@
 WellMed Pharmacy E-Commerce Platform
 WellMed is a comprehensive e-commerce platform designed specifically for pharmacies, allowing users to browse, consult, and order medications seamlessly. Built with Laravel 10, WellMed provides a user-friendly interface for clients and administrative tools for managing products, orders, and inventory.
 
+![image](https://github.com/user-attachments/assets/b840f38f-9e16-4b86-aea2-58a996662df3)
 
 ![image](https://github.com/user-attachments/assets/f4112365-de75-45fd-9f9b-820faf36b5a9)
 
 
-![image](https://github.com/user-attachments/assets/b840f38f-9e16-4b86-aea2-58a996662df3)
+
 
 ![image](https://github.com/user-attachments/assets/006f1819-0edc-48e3-977f-12dc7cf7a3c4)
 
@@ -31,7 +32,7 @@ Technology Stack
  - Real-Time Chat: API-based solution
 
 Getting Started
-Clone the repository: git clone https://github.com/yourusername/wellmed.git
+Clone the repository: git clone https://github.com/simaG19/WellMed-Pharmacy-E-Commerce-Platform.git
 Install dependencies: composer install
 Set up environment variables in .env file.
 Run migrations if needed: php artisan migrate
