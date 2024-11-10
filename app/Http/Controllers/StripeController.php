@@ -11,7 +11,7 @@ class StripeController extends Controller
     public function createCheckoutSession(Request $request)
     {
         // Set your secret key
-        Stripe::setApiKey(env('sk_test_51QI9OoLz7iWgQZmPzAoo7XnUOu2AkqG6V8981RPFclSIwhkMq9fMX3I82fz94rAKtnj0BKC8DnwmPDagsOP7PzLm00htRDTcgV'));
+        Stripe::setApiKey(env(''));
 
         $totalAmount = $request->totalAmount;
         $description = $request->description;
