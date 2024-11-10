@@ -90,10 +90,10 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-                    <li><a href="/" >Home<br></a></li>
-                    <li><a href="/shop">Shop</a></li>
-                    <li><a href="/concelt" class="active">Consultation</a></li>
-                    <li><a href="/about">About</a></li>
+                    <li><a href="index.php" >Home<br></a></li>
+                    <!-- <li><a href="shop.php">Shop</a></li> -->
+                    <li><a href="concelt.php" class="active">Consultation</a></li>
+                    <li><a href="about.php">About</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -133,7 +133,7 @@
                 }
             </style>
 
-            <a class="cta-btn d-none d-sm-block" href="/upload">Upload Prescription</a>
+            <a class="cta-btn d-none d-sm-block" href="shop.php">Shop</a>
 
         </div>
     </div>
