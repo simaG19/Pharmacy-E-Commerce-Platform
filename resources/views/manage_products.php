@@ -17,12 +17,34 @@
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <a class="navbar-brand" href="#">Admin Area</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                    <a class="nav-link" href="admin_area.php"  style="color:black;">Client Prescription</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="manage_products.php"  style="color:black;">Manage Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="show_orders.php"  style="color:black;">Manage Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php" style="color:black;">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Admin Area - Product List</h1>
+        <h1 class="text-center mb-4"> Product List</h1>
         <div class="mb-3 text-right">
-            <a href="/" class="btn btn-secondary">Logout</a>
-            <a href="/admin_area" class="btn btn-secondary">Client Information</a>
-            <a href="/show_orders" class="btn btn-secondary">Manage Orders</a>
+           
             <a href="/add_product" class="btn btn-primary">New Product</a>
         </div>
 
