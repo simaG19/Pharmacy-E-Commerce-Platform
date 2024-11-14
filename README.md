@@ -6,6 +6,7 @@ WellMed is a comprehensive e-commerce platform designed specifically for pharmac
 ![image](https://github.com/user-attachments/assets/f4112365-de75-45fd-9f9b-820faf36b5a9)
 
 
+![image](https://github.com/user-attachments/assets/a847a341-efd3-4d31-a36c-025c70011ec6)
 
 
 ![image](https://github.com/user-attachments/assets/006f1819-0edc-48e3-977f-12dc7cf7a3c4)
